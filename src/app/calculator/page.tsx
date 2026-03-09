@@ -2,11 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 import AdBanner from "@/components/AdBanner";
-
-type HistoryEntry = {
-  expression: string;
-  result: string;
-};
+import { addToHistory, getHistory, clearHistory, downloadCSV, type HistoryEntry } from "@/lib/history";
 
 export default function CalculatorPage() {
   const [display, setDisplay] = useState("0");
@@ -14,6 +10,11 @@ export default function CalculatorPage() {
   const [memory, setMemory] = useState(0);
   const [waitingForOperand, setWaitingForOperand] = useState(false);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
+
+  // Load persisted history on mount
+  useEffect(() => {
+    setHistory(getHistory().filter((h) => h.tool === "Basic Calculator"));
+  }, []);
   const [showHistory, setShowHistory] = useState(false);
 
   const inputDigit = useCallback(
@@ -65,8 +66,9 @@ export default function CalculatorPage() {
           try {
             const result = evaluateExpression(fullExpr);
             const resultStr = formatNumber(result);
+            addToHistory({ tool: "Basic Calculator", expression: fullExpr, result: resultStr });
             setHistory((prev) => [
-              { expression: fullExpr, result: resultStr },
+              { id: "", tool: "Basic Calculator", expression: fullExpr, result: resultStr, timestamp: Date.now() },
               ...prev.slice(0, 49),
             ]);
             setDisplay(resultStr);
@@ -217,25 +219,37 @@ export default function CalculatorPage() {
                 </button>
               </div>
               {showHistory && (
-                <div className="space-y-2 max-h-64 overflow-y-auto">
-                  {history.length === 0 ? (
-                    <p className="text-sm text-muted">No calculations yet.</p>
-                  ) : (
-                    history.map((entry, i) => (
-                      <div
-                        key={i}
-                        className="text-sm p-2 rounded-lg bg-display-bg cursor-pointer hover:bg-btn-hover"
-                        onClick={() => {
-                          setDisplay(entry.result);
-                          setWaitingForOperand(true);
-                        }}
-                      >
-                        <div className="text-muted text-xs">{entry.expression}</div>
-                        <div className="font-mono font-semibold">= {entry.result}</div>
-                      </div>
-                    ))
+                <>
+                  <div className="space-y-2 max-h-64 overflow-y-auto">
+                    {history.length === 0 ? (
+                      <p className="text-sm text-muted">No calculations yet.</p>
+                    ) : (
+                      history.map((entry, i) => (
+                        <div
+                          key={i}
+                          className="text-sm p-2 rounded-lg bg-display-bg cursor-pointer hover:bg-btn-hover"
+                          onClick={() => {
+                            setDisplay(entry.result);
+                            setWaitingForOperand(true);
+                          }}
+                        >
+                          <div className="text-muted text-xs">{entry.expression}</div>
+                          <div className="font-mono font-semibold">= {entry.result}</div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                  {history.length > 0 && (
+                    <div className="flex gap-2 mt-3 pt-3 border-t border-card-border">
+                      <button onClick={downloadCSV} className="flex-1 py-1.5 rounded-lg bg-btn-bg hover:bg-btn-hover text-xs font-medium">
+                        Export CSV
+                      </button>
+                      <button onClick={() => { clearHistory(); setHistory([]); }} className="flex-1 py-1.5 rounded-lg bg-btn-bg hover:bg-btn-hover text-xs font-medium text-red-500">
+                        Clear All
+                      </button>
+                    </div>
                   )}
-                </div>
+                </>
               )}
             </div>
 

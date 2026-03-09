@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
+import LocaleProvider from "@/components/LocaleProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -72,9 +73,11 @@ export default function RootLayout({
         className={`${sans.variable} ${mono.variable} antialiased min-h-screen flex flex-col`}
       >
         <ThemeProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <LocaleProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </LocaleProvider>
         </ThemeProvider>
       </body>
     </html>

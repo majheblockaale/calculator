@@ -37,6 +37,34 @@ const tools = [
     icon: "💱",
     color: "bg-amber-500",
   },
+  {
+    href: "/graphing-calculator",
+    title: "Graphing Calculator",
+    description: "Plot equations, zoom, pan, and explore interactive graphs.",
+    icon: "📊",
+    color: "bg-indigo-500",
+  },
+  {
+    href: "/crypto-converter",
+    title: "Crypto Converter",
+    description: "Bitcoin, Ethereum, and 50+ cryptocurrencies with live prices.",
+    icon: "₿",
+    color: "bg-orange-500",
+  },
+  {
+    href: "/solver",
+    title: "Step-by-Step Solver",
+    description: "Get detailed solution steps for algebra and quadratic equations.",
+    icon: "✏️",
+    color: "bg-teal-500",
+  },
+  {
+    href: "/mortgage-calculator",
+    title: "Mortgage Calculator",
+    description: "Calculate monthly payments and view amortization schedules.",
+    icon: "🏠",
+    color: "bg-rose-500",
+  },
 ];
 
 export default function HomePage() {
@@ -79,7 +107,7 @@ export default function HomePage() {
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">
             All the Tools You Need
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {tools.map((tool) => (
               <Link
                 key={tool.href}
@@ -93,6 +121,32 @@ export default function HomePage() {
                 </div>
                 <h3 className="font-semibold text-lg mb-2">{tool.title}</h3>
                 <p className="text-sm text-muted">{tool.description}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* More Calculators */}
+      <section className="px-4 pb-16">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">More Calculators</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            {[
+              { href: "/bmi-calculator", label: "BMI", icon: "⚖️" },
+              { href: "/tip-calculator", label: "Tip", icon: "💵" },
+              { href: "/percentage-calculator", label: "Percentage", icon: "%" },
+              { href: "/date-calculator", label: "Date", icon: "📅" },
+              { href: "/age-calculator", label: "Age", icon: "🎂" },
+              { href: "/gpa-calculator", label: "GPA", icon: "🎓" },
+            ].map((tool) => (
+              <Link
+                key={tool.href}
+                href={tool.href}
+                className="bg-card-bg border border-card-border rounded-xl p-4 text-center hover:border-primary transition-all hover:shadow-md"
+              >
+                <div className="text-2xl mb-2">{tool.icon}</div>
+                <p className="text-sm font-medium">{tool.label}</p>
               </Link>
             ))}
           </div>
@@ -146,8 +200,12 @@ export default function HomePage() {
           <ul className="list-disc list-inside text-muted space-y-1 mb-4">
             <li>Basic Calculator — arithmetic, percentages, memory functions</li>
             <li>Scientific Calculator — trigonometry, logarithms, exponents, constants</li>
+            <li>Graphing Calculator — plot equations, zoom, pan, multiple functions</li>
             <li>Unit Converter — length, weight, temperature, volume, area, speed, and more</li>
             <li>Currency Converter — 150+ world currencies with live exchange rates</li>
+            <li>Crypto Converter — Bitcoin, Ethereum, and 50+ cryptocurrencies</li>
+            <li>Step-by-Step Solver — detailed solutions for algebra and quadratics</li>
+            <li>BMI, Tip, Mortgage, Percentage, Date, Age, GPA Calculators</li>
           </ul>
           <p className="text-muted">
             All tools are free to use, work on any device, and require no downloads or signups.

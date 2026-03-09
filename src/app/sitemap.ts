@@ -5,17 +5,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
   const staticPages = [
-    "",
-    "/calculator",
-    "/scientific-calculator",
-    "/unit-converter",
-    "/currency-converter",
+    { path: "", priority: 1, changeFrequency: "weekly" as const },
+    { path: "/calculator", priority: 0.9, changeFrequency: "monthly" as const },
+    { path: "/scientific-calculator", priority: 0.9, changeFrequency: "monthly" as const },
+    { path: "/graphing-calculator", priority: 0.9, changeFrequency: "monthly" as const },
+    { path: "/unit-converter", priority: 0.9, changeFrequency: "monthly" as const },
+    { path: "/currency-converter", priority: 0.9, changeFrequency: "daily" as const },
+    { path: "/crypto-converter", priority: 0.8, changeFrequency: "daily" as const },
+    { path: "/solver", priority: 0.8, changeFrequency: "monthly" as const },
+    { path: "/bmi-calculator", priority: 0.7, changeFrequency: "monthly" as const },
+    { path: "/mortgage-calculator", priority: 0.8, changeFrequency: "monthly" as const },
+    { path: "/tip-calculator", priority: 0.7, changeFrequency: "monthly" as const },
+    { path: "/percentage-calculator", priority: 0.7, changeFrequency: "monthly" as const },
+    { path: "/date-calculator", priority: 0.7, changeFrequency: "monthly" as const },
+    { path: "/age-calculator", priority: 0.7, changeFrequency: "monthly" as const },
+    { path: "/gpa-calculator", priority: 0.7, changeFrequency: "monthly" as const },
   ];
 
-  return staticPages.map((path) => ({
-    url: `${baseUrl}${path}`,
+  return staticPages.map((page) => ({
+    url: `${baseUrl}${page.path}`,
     lastModified,
-    changeFrequency: path === "" ? "weekly" : "monthly",
-    priority: path === "" ? 1 : 0.8,
+    changeFrequency: page.changeFrequency,
+    priority: page.priority,
   }));
 }
