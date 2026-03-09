@@ -1,12 +1,9 @@
-import Link from "next/link";
-import type { Metadata } from "next";
-import AdBanner from "@/components/AdBanner";
+"use client";
 
-export const metadata: Metadata = {
-  title: "CalcOnline — Free Online Calculator & Unit Converter",
-  description:
-    "The ultimate free online calculator and converter. Scientific calculator, unit converter, currency converter and more. Fast, free, no signup required.",
-};
+import Link from "next/link";
+import AdBanner from "@/components/AdBanner";
+import { useLocale } from "@/components/LocaleProvider";
+import { t } from "@/lib/i18n";
 
 const tools = [
   {
@@ -68,32 +65,41 @@ const tools = [
 ];
 
 export default function HomePage() {
+  const { locale } = useLocale();
+
   return (
     <div>
       {/* Hero Section */}
       <section className="py-16 md:py-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            The Ultimate Free{" "}
-            <span className="text-primary">Calculator</span> &{" "}
-            <span className="text-primary">Converter</span>
+            {t(locale, "home.title").split("Calculator").length > 1 ? (
+              <>
+                {t(locale, "home.title").split("Calculator")[0]}
+                <span className="text-primary">Calculator</span>
+                {t(locale, "home.title").split("Calculator")[1]?.split("Converter")[0]}
+                <span className="text-primary">Converter</span>
+                {t(locale, "home.title").split("Converter").pop()}
+              </>
+            ) : (
+              t(locale, "home.title")
+            )}
           </h1>
           <p className="text-lg md:text-xl text-muted mb-8 max-w-2xl mx-auto">
-            Calculate and convert anything, anywhere. Scientific calculator, unit converter,
-            currency converter — all in one place. Free, fast, no signup required.
+            {t(locale, "home.subtitle")}
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
               href="/calculator"
               className="px-8 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-primary-hover transition-colors text-lg"
             >
-              Open Calculator
+              {t(locale, "home.openCalculator")}
             </Link>
             <Link
               href="/unit-converter"
               className="px-8 py-3 bg-btn-bg rounded-xl font-semibold hover:bg-btn-hover transition-colors text-lg"
             >
-              Convert Units
+              {t(locale, "home.convertUnits")}
             </Link>
           </div>
         </div>
@@ -105,7 +111,7 @@ export default function HomePage() {
       <section className="px-4 pb-16">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">
-            All the Tools You Need
+            {t(locale, "home.allTools")}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {tools.map((tool) => (
@@ -130,7 +136,7 @@ export default function HomePage() {
       {/* More Calculators */}
       <section className="px-4 pb-16">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">More Calculators</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">{t(locale, "nav.more")}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             {[
               { href: "/bmi-calculator", label: "BMI", icon: "⚖️" },
@@ -157,29 +163,23 @@ export default function HomePage() {
       <section className="px-4 pb-16 bg-card-bg border-y border-card-border py-16">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">
-            Why CalcOnline?
+            {t(locale, "home.whyUs")}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="text-4xl mb-4">⚡</div>
-              <h3 className="font-semibold text-lg mb-2">Lightning Fast</h3>
-              <p className="text-sm text-muted">
-                Instant calculations with no loading screens. Works offline too.
-              </p>
+              <h3 className="font-semibold text-lg mb-2">{t(locale, "home.fast")}</h3>
+              <p className="text-sm text-muted">{t(locale, "home.fastDesc")}</p>
             </div>
             <div className="text-center">
               <div className="text-4xl mb-4">🆓</div>
-              <h3 className="font-semibold text-lg mb-2">100% Free</h3>
-              <p className="text-sm text-muted">
-                No signups, no subscriptions, no premium tiers. Every tool is completely free.
-              </p>
+              <h3 className="font-semibold text-lg mb-2">{t(locale, "home.free")}</h3>
+              <p className="text-sm text-muted">{t(locale, "home.freeDesc")}</p>
             </div>
             <div className="text-center">
               <div className="text-4xl mb-4">📱</div>
-              <h3 className="font-semibold text-lg mb-2">Works Everywhere</h3>
-              <p className="text-sm text-muted">
-                Responsive design that works on phones, tablets, and desktops. Install as an app.
-              </p>
+              <h3 className="font-semibold text-lg mb-2">{t(locale, "home.everywhere")}</h3>
+              <p className="text-sm text-muted">{t(locale, "home.everywhereDesc")}</p>
             </div>
           </div>
         </div>

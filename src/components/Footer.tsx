@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { useLocale } from "./LocaleProvider";
+import { t } from "@/lib/i18n";
 
 const calculators = [
   { href: "/calculator", label: "Basic Calculator" },
@@ -24,6 +28,8 @@ const smartTools = [
 ];
 
 export default function Footer() {
+  const { locale } = useLocale();
+
   return (
     <footer className="border-t border-card-border bg-card-bg mt-auto">
       <div className="max-w-7xl mx-auto px-4 py-12">
@@ -31,11 +37,11 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-3 text-primary">CalcOnline</h3>
             <p className="text-sm text-muted">
-              The ultimate free calculator and converter platform. Calculate and convert anything, anywhere.
+              {t(locale, "footer.description")}
             </p>
           </div>
           <div>
-            <h4 className="font-semibold mb-3">Calculators</h4>
+            <h4 className="font-semibold mb-3">{t(locale, "nav.calculator")}s</h4>
             <ul className="space-y-2">
               {calculators.map((link) => (
                 <li key={link.href}>
@@ -47,7 +53,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-3">Converters</h4>
+            <h4 className="font-semibold mb-3">{t(locale, "nav.unitConverter")}s</h4>
             <ul className="space-y-2">
               {converters.map((link) => (
                 <li key={link.href}>
@@ -59,7 +65,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-3">Smart Tools</h4>
+            <h4 className="font-semibold mb-3">{t(locale, "footer.tools")}</h4>
             <ul className="space-y-2">
               {smartTools.map((link) => (
                 <li key={link.href}>
@@ -72,7 +78,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-card-border text-center text-sm text-muted">
-          © {new Date().getFullYear()} CalcOnline. All rights reserved.
+          © {new Date().getFullYear()} CalcOnline. {t(locale, "footer.rights")}
         </div>
       </div>
     </footer>

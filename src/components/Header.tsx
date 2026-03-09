@@ -2,33 +2,41 @@
 
 import Link from "next/link";
 import { useTheme } from "./ThemeProvider";
+import { useLocale } from "./LocaleProvider";
+import { t } from "@/lib/i18n";
 import { useState } from "react";
 import LanguageSelector from "./LanguageSelector";
 
-const navLinks = [
-  { href: "/calculator", label: "Calculator" },
-  { href: "/scientific-calculator", label: "Scientific" },
-  { href: "/unit-converter", label: "Converter" },
-  { href: "/currency-converter", label: "Currency" },
-];
-
 const moreLinks = [
-  { href: "/graphing-calculator", label: "Graphing" },
-  { href: "/crypto-converter", label: "Crypto" },
-  { href: "/solver", label: "Solver" },
-  { href: "/bmi-calculator", label: "BMI" },
-  { href: "/mortgage-calculator", label: "Mortgage" },
-  { href: "/tip-calculator", label: "Tip" },
-  { href: "/percentage-calculator", label: "Percentage" },
-  { href: "/date-calculator", label: "Date" },
-  { href: "/age-calculator", label: "Age" },
-  { href: "/gpa-calculator", label: "GPA" },
-];
+  { href: "/graphing-calculator", labelKey: null, label: "Graphing" },
+  { href: "/crypto-converter", labelKey: null, label: "Crypto" },
+  { href: "/solver", labelKey: null, label: "Solver" },
+  { href: "/bmi-calculator", labelKey: null, label: "BMI" },
+  { href: "/mortgage-calculator", labelKey: null, label: "Mortgage" },
+  { href: "/tip-calculator", labelKey: null, label: "Tip" },
+  { href: "/percentage-calculator", labelKey: null, label: "Percentage" },
+  { href: "/date-calculator", labelKey: null, label: "Date" },
+  { href: "/age-calculator", labelKey: null, label: "Age" },
+  { href: "/gpa-calculator", labelKey: null, label: "GPA" },
+] as const;
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
+  const { locale } = useLocale();
   const [menuOpen, setMenuOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
+
+  const navLinks = [
+    { href: "/calculator", label: t(locale, "nav.calculator") },
+    { href: "/scientific-calculator", label: t(locale, "nav.scientific") },
+    { href: "/unit-converter", label: t(locale, "nav.unitConverter") },
+    { href: "/currency-converter", label: t(locale, "nav.currencyConverter") },
+  ];
+
+  const allLinks = [
+    ...navLinks,
+    ...moreLinks.map((l) => ({ href: l.href, label: l.label })),
+  ];
 
   return (
     <header className="sticky top-0 z-50 bg-card-bg border-b border-card-border backdrop-blur-sm">
@@ -55,7 +63,7 @@ export default function Header() {
               onClick={() => setMoreOpen(!moreOpen)}
               className="px-3 py-2 rounded-lg text-sm font-medium hover:bg-btn-bg transition-colors flex items-center gap-1"
             >
-              More
+              {t(locale, "nav.more")}
               <span className="text-xs">{moreOpen ? "▲" : "▼"}</span>
             </button>
             {moreOpen && (
@@ -69,7 +77,7 @@ export default function Header() {
                       onClick={() => setMoreOpen(false)}
                       className="block px-4 py-2 text-sm hover:bg-btn-bg transition-colors"
                     >
-                      {link.label} Calculator
+                      {link.label} {t(locale, "nav.calculator")}
                     </Link>
                   ))}
                 </div>
@@ -101,7 +109,7 @@ export default function Header() {
 
       {menuOpen && (
         <nav className="lg:hidden border-t border-card-border bg-card-bg px-4 py-2 max-h-[70vh] overflow-y-auto">
-          {[...navLinks, ...moreLinks].map((link) => (
+          {allLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
