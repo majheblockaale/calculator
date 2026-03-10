@@ -159,6 +159,51 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Financial Calculators */}
+      <section className="px-4 pb-16">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Financial Calculators</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            {[
+              { href: "/finance-calculator", label: "Finance", icon: "💰" },
+              { href: "/loan-calculator", label: "Loan", icon: "🏦" },
+              { href: "/payment-calculator", label: "Payment", icon: "💳" },
+              { href: "/mortgage-payoff-calculator", label: "Mortgage Payoff", icon: "🏡" },
+              { href: "/compound-interest-calculator", label: "Compound Interest", icon: "📈" },
+              { href: "/interest-calculator", label: "Interest", icon: "🔢" },
+              { href: "/interest-rate-calculator", label: "Interest Rate", icon: "🎯" },
+              { href: "/investment-calculator", label: "Investment", icon: "📊" },
+              { href: "/roi-calculator", label: "ROI", icon: "🔄" },
+              { href: "/401k-calculator", label: "401(k)", icon: "🏛️" },
+              { href: "/retirement-calculator", label: "Retirement", icon: "🌅" },
+              { href: "/salary-calculator", label: "Salary", icon: "💼" },
+              { href: "/paycheck-calculator", label: "Paycheck", icon: "🧾" },
+              { href: "/income-tax-calculator", label: "Income Tax", icon: "📋" },
+              { href: "/sales-tax-calculator", label: "Sales Tax", icon: "🛒" },
+              { href: "/inflation-calculator", label: "Inflation", icon: "📉" },
+              { href: "/amortization-calculator", label: "Amortization", icon: "📑" },
+              { href: "/auto-loan-calculator", label: "Auto Loan", icon: "🚗" },
+              { href: "/lease-calculator", label: "Lease", icon: "📝" },
+              { href: "/mutual-fund-calculator", label: "Mutual Fund", icon: "🗂️" },
+              { href: "/discount-calculator", label: "Discount", icon: "🏷️" },
+              { href: "/margin-calculator", label: "Margin", icon: "📐" },
+              { href: "/markup-calculator", label: "Markup", icon: "🔖" },
+              { href: "/profit-calculator", label: "Profit", icon: "💹" },
+              { href: "/break-even-calculator", label: "Break-Even", icon: "⚖️" },
+            ].map((tool) => (
+              <Link
+                key={tool.href}
+                href={tool.href}
+                className="bg-card-bg border border-card-border rounded-xl p-4 text-center hover:border-primary transition-all hover:shadow-md"
+              >
+                <div className="text-2xl mb-2">{tool.icon}</div>
+                <p className="text-sm font-medium">{tool.label}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="px-4 pb-16 bg-card-bg border-y border-card-border py-16">
         <div className="max-w-6xl mx-auto">
